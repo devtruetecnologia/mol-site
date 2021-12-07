@@ -1,0 +1,33 @@
+import { useRouter } from 'next/router';
+import { Anchor, HeaderS, Button } from './styles';
+
+export function Header() {
+  const router = useRouter();
+
+  function goToRegister() {
+    router.push('/register')
+  }
+
+  return(
+    <HeaderS>
+      <img src='logo-light.svg' alt="Mol" />
+
+      <nav>
+          <Anchor to="/" spy={true} smooth={true} duration={500}>Início</Anchor>
+          <Anchor to="meet-mol" spy={true} smooth={true} duration={500}>O MOL</Anchor>
+          <Anchor to="app" spy={true} smooth={true} duration={500}>Aplicativo</Anchor>
+          <Anchor to="how-works" spy={true} smooth={true} duration={500}>Como funciona</Anchor>
+          <Anchor to="advantages" spy={true} smooth={true} duration={500}>Vantagens</Anchor>
+      </nav>
+
+      <div className="buttons">
+        <Button onClick={goToRegister} outlined>
+          Cadastrar-se
+        </Button>
+        <Button>
+          Acessar
+        </Button>
+      </div>
+    </HeaderS>
+  );
+}
