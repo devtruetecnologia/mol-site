@@ -22,8 +22,8 @@ export default function Register() {
         <BoxForm>
           <img src="logo-light.svg" alt="Logo MOL" />
           <p>Você está prestes a conhecer um sistema de gestão logística mais inovador do Brasil.</p>
-          <InputField />
-          <InputField />
+          <InputField label="Nome" placeholder="Informe seu nome" onChange={(val) => {}} />
+          <InputField  label="Sobrenome" placeholder="Informe seu sobrenome" onChange={(val) => {}}  />
         </BoxForm>
       </Container>
     </motion.main>

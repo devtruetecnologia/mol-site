@@ -57,8 +57,8 @@ export function DepoimentCarousel({ slides }:DepoimentCarouselProps) {
                 <div className="embla__slide__inner">
                   <div className="embla__slide__div">
                     <img
-                      src={`images/depoiments/${index}.jpg`}
-                      alt="Como funciona?"
+                      src={`images/depoiments/0.jpg`}
+                      alt=""
                     />
                     <div className="text-box">
                       <TitleTextYellow>{slide.name}</TitleTextYellow>

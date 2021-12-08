@@ -6,7 +6,7 @@ interface ButtonProps {
 
 export const Section = styled.section`
   width: 100%;
-  min-height: 45rem;
+  height: 44.3rem;
   background: linear-gradient(90.94deg, #EFEFEF 27.1%, rgba(239, 239, 239, 0) 53.2%), url('images/comercial-agent-bg.jpg');
   background-size: cover;
   margin: 0;
