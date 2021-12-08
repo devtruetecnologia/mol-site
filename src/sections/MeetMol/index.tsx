@@ -15,7 +15,7 @@ export function MeetMol() {
         <div className="box-section">
           <div className="box-video">
             <ThumbVideo playing={isPlaying} onClick={() => {setIsPlaying(true)}}></ThumbVideo>
-            <ReactPlayer playing={isPlaying} url="https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4" width='100%' height='100%' controls pip />
+            <ReactPlayer playing={isPlaying} url="https://pixabay.com/pt/videos/download/video-84970_small.mp4" width='100%' height='100%' controls pip />
           </div>
           <div className="box">
             <TitleTextBlue>Solucionamos suas demandas logísticas de maneira simples.</TitleTextBlue>
