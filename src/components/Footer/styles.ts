@@ -36,8 +36,10 @@ export const FooterS = styled.footer`
         justify-content: space-between;
         align-items: center;
 
-        object {
+        img {
           margin-left: 0.5rem;
+          width: 2rem;
+          /* cursor: pointer; */
           
           &:hover {
             color: ${colors.primaryYellow};
