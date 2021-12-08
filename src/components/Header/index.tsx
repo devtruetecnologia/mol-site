@@ -12,6 +12,10 @@ export function Header() {
     router.push('/register')
   }
 
+  function goToAccess() {
+    router.push('/access')
+  }
+
   return(
     <HeaderS>
       <img src='logo-light.svg' alt="Mol" />
@@ -28,7 +32,7 @@ export function Header() {
         <Button onClick={goToRegister} outlined>
           Cadastrar-se
         </Button>
-        <Button>
+        <Button onClick={goToAccess}>
           Acessar
         </Button>
       </div>
