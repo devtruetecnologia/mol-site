@@ -19,4 +19,10 @@ export const InputFieldS = styled.div`
 
     margin-bottom: 0.3rem;
   }
+
+  .input {
+    &:focus {
+      background-color: #FFF;
+    }
+  }
 `;

@@ -1,19 +1,20 @@
+import { InputProps } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/input";
-import { ChangeEventHandler } from "react";
 import { colors } from "../../assets/styles/global";
 import { InputFieldS } from "./styles";
 
 interface InputFieldProps {
   label: string,
-  placeholder: string,
-  onChange: ChangeEventHandler<HTMLInputElement>,
+  name: string,
 }
 
-export default function InputField({ label, placeholder, onChange }: InputFieldProps) {
+export default function InputField(props: InputFieldProps & InputProps) {
+  const { label, name, ...rest } = props
+  
   return (
     <InputFieldS>
       <label htmlFor="input">{label}</label>
-      <Input className="input" onChange={onChange} variant='filled' width="100%" placeholder={placeholder} fontSize="0.75rem" focusBorderColor={colors.primaryYellow} bgColor={colors.primaryWhite} backgroundColor={colors.primaryWhite} padding="0.5rem 0.6rem" borderRadius="0.125rem" size='md' />
+      <Input className="input" label={label} name={name} {...rest} variant='filled' width="100%" fontSize="0.75rem" focusBorderColor={colors.primaryYellow} bgColor={colors.primaryWhite} backgroundColor={colors.primaryWhite} padding="0 0.6rem" borderRadius="0.125rem" size='md' />
     </InputFieldS>
   );
 }

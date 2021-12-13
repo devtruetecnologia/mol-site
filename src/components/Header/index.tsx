@@ -9,7 +9,7 @@ export function Header() {
   }
 
   function goToRegister() {
-    router.push('/register')
+    router.push({ pathname: '/register', query: { type: 'PF' } })
   }
 
   function goToAccess() {
