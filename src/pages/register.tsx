@@ -1,25 +1,46 @@
-import { Checkbox, CheckboxGroup } from '@chakra-ui/checkbox';
+import { Checkbox } from '@chakra-ui/checkbox';
 import { motion } from 'framer-motion';
 import { BoxForm, Container } from '../assets/styles/register';
 import { Button } from '../components/Header/styles';
 import InputField from '../components/InputField';
 import * as Yup from "yup";
-import { CircularProgress, Input } from '@chakra-ui/react';
+import { CircularProgress, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
-import { Field, Form, FormikProvider, useFormik } from 'formik';
-import { colors } from '../assets/styles/global';
+import { useFormik } from 'formik';
+import InputMask from "react-input-mask";
+import { auth, db } from '../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { FirebaseError } from 'firebase/app';
+
+interface RegisterAuthProps {
+  data: {
+    name?: string,
+    last_name?: string,
+    cpf?: string,
+    cnpj?: string,
+    username?: string,
+    phone: string,
+    email: string,
+    password: string,
+  },
+  type: 'AGENT' | 'COMMERCIAL' | 'PROVIDER'
+}
 
 interface RegisterProps {
-  type: 'PF' | 'PJ',
+  type: 'AGENT' | 'COMMERCIAL' | 'PROVIDER',
 }
 
 export default function Register() {
+  const toast = useToast()
   const router = useRouter()
+
   const variants = {
     hidden: { opacity: 0, x: -200, y: 0 },
     enter: { opacity: 1, x: 0, y: 0 },
     exit: { opacity: 0, x: 0, y: -100 },
   }
+
   const {
     query: { type },
   } = router
@@ -31,49 +52,117 @@ export default function Register() {
   });
 
   function getInitialValues() {
-    if (type === 'PF') {
       return {
         name: "",
         last_name: "",
-        phone: "",
-        email: ""
-      };
-    } else {
-      return {
-        cnpj: "",
         username: "",
+        cnpj: "",
+        cpf: "",
         phone: "",
-        email: ""
-      }
-    }
+        email: "",
+        password: ""
+      };
   }
 
   function getValidationSchema() {
-    if (type === 'PF') {
+    if (type !== 'PROVIDER') {
       return Yup.object(
         {
           name: Yup.string().trim().required("Este campo é obrigatório."),
           last_name: Yup.string().trim().required("Este campo é obrigatório."),
-          phone: Yup.number().required("Este campo é obrigatório."),
-          email: Yup.string().email().required("Este campo é obrigatório."),
+          cpf: Yup.string().trim().length(14, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
+          phone: Yup.string().length(15, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
+          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório."),
+          password: Yup.string().required("Este campo é obrigatório."),
         },
       );
     } else {
       return Yup.object(
         {
-          cnpj: Yup.string().trim().required("Este campo é obrigatório."),
+          cnpj: Yup.string().length(18, "É obrigatório ter 14 dígitos.").trim().required("Este campo é obrigatório."),
           username: Yup.string().trim().required("Este campo é obrigatório."),
-          phone: Yup.number().required("Este campo é obrigatório."),
-          email: Yup.string().email().required("Este campo é obrigatório."),
+          phone: Yup.string().length(15, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
+          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório."),
+          password: Yup.string().required("Este campo é obrigatório."),
         },
       );
     }
   }
 
-  function handleFormSubmit(e) {
-    console.log(type)
-    console.log('submit');
-    formik.handleReset(e);
+  async function handleFormSubmit(e) {
+    // PUXAR DOC COM CNPJ PARA VALIDAÇÃO SE EXISTE
+
+    createUserWithEmailAndPassword(auth, formik.values.email, formik.values.password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        
+        console.log('PASSOU');
+
+        if (type === 'AGENT') {
+          await setDoc(doc(db, "users", user.uid), {
+            id: user.uid,
+            name: formik.values.name,
+            last_name: formik.values.last_name,
+            cpf: formik.values.cpf,
+            status: 0,
+            role: 'user',
+            profile: 'agent',
+            phone: formik.values.phone,
+            email: formik.values.email,
+            created_at: new Date(),
+            updated_at: new Date(),
+          });
+        } else if (type === 'PROVIDER') {
+          await setDoc(doc(db, "users", user.uid), {
+            id: user.uid,
+            username: formik.values.username,
+            cnpj: formik.values.cnpj,
+            status: 0,
+            role: 'user',
+            profile: 'providers',
+            phone: formik.values.phone,
+            email: formik.values.email,
+            created_at: new Date(),
+            updated_at: new Date(),
+          });
+        } else {
+          await setDoc(doc(db, "users", user.uid), {
+            id: user.uid,
+            name: formik.values.name,
+            last_name: formik.values.last_name,
+            cpf: formik.values.cpf,
+            status: 0,
+            role: 'user',
+            profile: 'commercial',
+            phone: formik.values.phone,
+            email: formik.values.email,
+            created_at: new Date(),
+            updated_at: new Date(),
+          });
+        }
+
+        toast({
+          description: 'Cadastro efetuado!',
+          status: 'success',
+          variant: 'solid',
+        })
+        
+        formik.handleReset(e);
+      })
+      .catch((error: FirebaseError) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        
+        toast({
+          title: 'Erro',
+          description: errorCode == 'auth/email-already-in-use' ? 'Email já cadastrado!' : errorCode,
+          status: 'error',
+          variant: 'solid',
+          isClosable: true,
+        })
+
+        formik.handleReset(e);
+      });
   }
 
   return (
@@ -89,13 +178,15 @@ export default function Register() {
           <img src="logo-light.svg" alt="Logo MOL" />
           <p>Você está prestes a conhecer um sistema de gestão logística mais inovador do Brasil.</p>
             {
-              type == 'PF' ? 
+              type !== 'PROVIDER' ? 
               (
                 <form onSubmit={formik.handleSubmit}>
-                  <InputField label="Nome" name="name" placeholder="Informe seu nome" isInvalid={Boolean(formik.errors.name)} onChange={formik.handleChange} value={formik.values.name} />
-                  <InputField label="Sobrenome" name="last_name" placeholder="Informe seu sobrenome" isInvalid={Boolean(formik.errors.last_name)} onChange={formik.handleChange} value={formik.values.last_name} />
-                  <InputField label="Telefone" name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
-                  <InputField label="E-mail" name="email" placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
+                  <InputField label="Nome" messageError={`${formik.errors.name}`} name="name" placeholder="Informe seu nome" isInvalid={Boolean(formik.errors.name)} onChange={formik.handleChange} value={formik.values.name} />
+                  <InputField label="Sobrenome" messageError={`${formik.errors.last_name}`} name="last_name" placeholder="Informe seu sobrenome" isInvalid={Boolean(formik.errors.last_name)} onChange={formik.handleChange} value={formik.values.last_name} />
+                  <InputField label="CPF" mask="***.***.***-**" as={InputMask} messageError={`${formik.errors.cpf}`} name="cpf" placeholder="Informe seu CPF" isInvalid={Boolean(formik.errors.cpf)} onChange={formik.handleChange} value={formik.values.cpf} />
+                  <InputField label="Telefone" mask="(**) *****-****" as={InputMask} messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
+                  <InputField label="E-mail" messageError={`${formik.errors.email}`} name="email" placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
+                  <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                   <div className="checkbox-group">
                     <Checkbox className="checkbox-terms" value='terms'><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
                     <Checkbox className="checkbox-terms" value='privacy'><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
@@ -108,10 +199,11 @@ export default function Register() {
               : 
               (
                 <form onSubmit={formik.handleSubmit}>
-                  <InputField label="CNPJ" name="cnpj" placeholder="Informe seu CNPJ" isInvalid={Boolean(formik.errors.cnpj)} onChange={formik.handleChange} value={formik.values.name} />
-                  <InputField label="Nome de Usuário" name="username" placeholder="Informe seu nome de usuário" isInvalid={Boolean(formik.errors.username)} onChange={formik.handleChange} value={formik.values.last_name} />
-                  <InputField label="Telefone" name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
-                  <InputField label="E-mail" name="email" placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
+                  <InputField label="Nome de Usuário" messageError={`${formik.errors.username}`} name="username" placeholder="Informe seu nome de usuário" isInvalid={Boolean(formik.errors.username)} onChange={formik.handleChange} value={formik.values.username} />
+                  <InputField label="CNPJ" mask="**.***.***/****-**" as={InputMask} messageError={`${formik.errors.cnpj}`} name="cnpj" placeholder="Informe seu CNPJ" isInvalid={Boolean(formik.errors.cnpj)} onChange={formik.handleChange} value={formik.values.cnpj} />
+                  <InputField label="Telefone" mask="(**) *****-****" as={InputMask} messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
+                  <InputField label="E-mail" name="email" messageError={`${formik.errors.email}`} placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
+                  <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                   <div className="checkbox-group">
                     <Checkbox className="checkbox-terms" value='terms'><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
                     <Checkbox className="checkbox-terms" value='privacy'><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>

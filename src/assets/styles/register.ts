@@ -3,11 +3,11 @@ import { colors } from "../../assets/styles/global";
 
 export const Container = styled.main`
   width: 100%;
-  height: 54rem;
+  min-height: 54rem;
   background: linear-gradient(90deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/driver-showing-bg.jpg'), ${colors.primaryBlue};
   background-size: contain;
   margin: 0;
-  padding: 0.6rem 10%;
+  padding: 4rem 10%;
 
   display: flex;
   flex-direction: row;
@@ -21,7 +21,7 @@ export const Container = styled.main`
 
 export const BoxForm = styled.div`
   width: 27rem;
-  height: 85%;
+  min-height: 85%;
   background-color: ${colors.primaryBlue};
   border-radius: 0.625rem;
 

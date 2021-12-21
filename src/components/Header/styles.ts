@@ -29,6 +29,12 @@ export const HeaderS = styled.header`
       flex-direction: row;
       align-items: center;
     }
+
+    .buttons {
+      a {
+        margin-right: 0.5rem;
+      }
+    }
 `;
 
 export const Anchor = styled(Link)`
