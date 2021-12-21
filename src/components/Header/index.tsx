@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { Link } from 'react-scroll';
 import { Anchor, HeaderS, Button } from './styles';
 
 export function Header() {
@@ -6,10 +7,6 @@ export function Header() {
 
   function goToHome() {
     router.push('/')
-  }
-
-  function goToRegister() {
-    router.push('/register')
   }
 
   function goToAccess() {
@@ -29,9 +26,11 @@ export function Header() {
       </nav>
 
       <div className="buttons">
-        <Button onClick={goToRegister} outlined>
-          Cadastrar-se
-        </Button>
+        <Link to="register" spy={true} smooth={true} duration={500}>
+          <Button outlined>
+            Cadastrar-se
+          </Button>
+        </Link>
         <Button onClick={goToAccess}>
           Acessar
         </Button>

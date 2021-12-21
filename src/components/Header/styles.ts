@@ -4,6 +4,7 @@ import { colors } from "../../assets/styles/global";
 
 interface ButtonProps {
   outlined?: boolean;
+  extended?: boolean;
 }
 
 export const HeaderS = styled.header`
@@ -27,6 +28,12 @@ export const HeaderS = styled.header`
       display: flex;
       flex-direction: row;
       align-items: center;
+    }
+
+    .buttons {
+      a {
+        margin-right: 0.5rem;
+      }
     }
 `;
 
@@ -101,6 +108,7 @@ export const Button = styled.button<ButtonProps>`
     background-color: ${props => props.outlined ? 'rgba(0, 0, 0, 0)' : colors.primaryYellow};
     font-size: 0.75rem;
     font-weight: 800;
+    width: ${props => props.extended ? '100%' : 'initial'};
     border: solid 0.09rem ${colors.primaryYellow};
     padding: .45rem .8rem;
     border-radius: .2rem;

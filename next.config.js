@@ -3,7 +3,7 @@ module.exports = {
     return [
       {
         source: '/access',
-        destination: 'https://manifestoonline-dd357.web.app/',
+        destination: 'https://admin.mol.log.br/',
         permanent: true
       }
     ];

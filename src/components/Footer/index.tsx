@@ -15,7 +15,6 @@ export function Footer() {
         </div>
         <div className="separator"></div>
         <div className="bottom">
-          <TextFooterBottom>2021 Mol | CNPL 09.176.597/0001-02</TextFooterBottom>
           <div>
             <Anchor>
               Termos

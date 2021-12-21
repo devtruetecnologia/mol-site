@@ -60,7 +60,7 @@ export const FooterS = styled.footer`
 
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
 
       div {

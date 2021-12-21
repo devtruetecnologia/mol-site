@@ -28,6 +28,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body,
+  p,
   input,
   button,
   textarea {
