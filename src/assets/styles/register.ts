@@ -51,6 +51,11 @@ export const BoxForm = styled.div`
 
   .checkbox-group {
     margin: 0.5rem 0 1.5rem 0;
+
+    .error {
+      margin: 0;
+      font-size: .75rem;
+    }
   }
 
   .checkbox-terms {

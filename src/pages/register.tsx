@@ -10,7 +10,7 @@ import { useFormik } from 'formik';
 import InputMask from "react-input-mask";
 import { auth, db } from '../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 
 interface RegisterAuthProps {
@@ -64,26 +64,102 @@ export default function Register() {
       };
   }
 
+  async function checkCpf(cpf: string) {
+    const q = query(collection(db, "users"), where("cpf", "==", cpf ? cpf : ""));
+
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    
+    if (querySnapshot.empty) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async function checkCnpj(cnpj: string) {
+    const q = query(collection(db, "users"), where("cnpj", "==", cnpj ? cnpj : ""));
+
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    
+    if (querySnapshot.empty) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  async function existsEmail(email: string) {
+    const q = query(collection(db, "users"), where("email", "==", email ? email : ""));
+
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    
+    if (querySnapshot.empty) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   function getValidationSchema() {
+    Yup.addMethod(Yup.string, "validCpf", function (errorMessage) {
+      return this.test(`valid-cpf`, errorMessage, async function (value) {
+        const { path, createError } = this;
+    
+        return (
+          await checkCpf(value) ||
+          createError({ path, message: errorMessage })
+        );
+      });
+    });
+
+    Yup.addMethod(Yup.string, "validCnpj", function (errorMessage) {
+      return this.test(`valid-cnpj`, errorMessage, async function (value) {
+        const { path, createError } = this;
+    
+        return (
+          await checkCnpj(value) ||
+          createError({ path, message: errorMessage })
+        );
+      });
+    });
+
+    Yup.addMethod(Yup.string, "existsEmail", function (errorMessage) {
+      return this.test(`exists-email`, errorMessage, async function (value) {
+        const { path, createError } = this;
+    
+        return (
+          await existsEmail(value) ||
+          createError({ path, message: errorMessage })
+        );
+      });
+    });
+
     if (type !== 'PROVIDER') {
       return Yup.object(
         {
           name: Yup.string().trim().required("Este campo é obrigatório."),
           last_name: Yup.string().trim().required("Este campo é obrigatório."),
-          cpf: Yup.string().trim().length(14, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
+          cpf: Yup.string().trim().length(14, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório.").validCpf("CPF já registrado"),
           phone: Yup.string().length(15, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
-          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório."),
+          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório.").existsEmail("E-mail já registrado"),
           password: Yup.string().required("Este campo é obrigatório."),
+          terms: Yup.string().required("Para prosseguir aceite os termos."),
+          privacy: Yup.string().required("Para prosseguir aceite os termos."),
         },
       );
     } else {
       return Yup.object(
         {
-          cnpj: Yup.string().length(18, "É obrigatório ter 14 dígitos.").trim().required("Este campo é obrigatório."),
+          cnpj: Yup.string().length(18, "É obrigatório ter 14 dígitos.").trim().required("Este campo é obrigatório.").validCpf("CNPJ já registrado"),
           username: Yup.string().trim().required("Este campo é obrigatório."),
           phone: Yup.string().length(15, "É obrigatório ter 11 dígitos.").required("Este campo é obrigatório."),
-          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório."),
+          email: Yup.string().email("E-mail inválido.").required("Este campo é obrigatório.").existsEmail("E-mail já registrado"),
           password: Yup.string().required("Este campo é obrigatório."),
+          terms: Yup.string().required("Para prosseguir aceite os termos."),
+          privacy: Yup.string().required("Para prosseguir aceite os termos."),
         },
       );
     }
@@ -183,13 +259,14 @@ export default function Register() {
                 <form onSubmit={formik.handleSubmit}>
                   <InputField label="Nome" messageError={`${formik.errors.name}`} name="name" placeholder="Informe seu nome" isInvalid={Boolean(formik.errors.name)} onChange={formik.handleChange} value={formik.values.name} />
                   <InputField label="Sobrenome" messageError={`${formik.errors.last_name}`} name="last_name" placeholder="Informe seu sobrenome" isInvalid={Boolean(formik.errors.last_name)} onChange={formik.handleChange} value={formik.values.last_name} />
-                  <InputField label="CPF" mask="***.***.***-**" as={InputMask} messageError={`${formik.errors.cpf}`} name="cpf" placeholder="Informe seu CPF" isInvalid={Boolean(formik.errors.cpf)} onChange={formik.handleChange} value={formik.values.cpf} />
-                  <InputField label="Telefone" mask="(**) *****-****" as={InputMask} messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
+                  <InputField label="CPF" mask="***.***.***-**" messageError={`${formik.errors.cpf}`} name="cpf" placeholder="Informe seu CPF" isInvalid={Boolean(formik.errors.cpf)} onChange={formik.handleChange} value={formik.values.cpf} as={InputMask} />
+                  <InputField label="Telefone" mask="(**) *****-****" messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} as={InputMask} />
                   <InputField label="E-mail" messageError={`${formik.errors.email}`} name="email" placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                   <div className="checkbox-group">
-                    <Checkbox className="checkbox-terms" value='terms'><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
-                    <Checkbox className="checkbox-terms" value='privacy'><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                    <Checkbox className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
+                    <Checkbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                    <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
                   </div>
                   <Button type='submit' extended>
                     {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
@@ -205,8 +282,9 @@ export default function Register() {
                   <InputField label="E-mail" name="email" messageError={`${formik.errors.email}`} placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                   <div className="checkbox-group">
-                    <Checkbox className="checkbox-terms" value='terms'><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
-                    <Checkbox className="checkbox-terms" value='privacy'><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                    <Checkbox className="checkbox-terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
+                    <Checkbox className="checkbox-terms" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                    <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
                   </div>
                   <Button type='submit' extended>
                     {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
