@@ -14,7 +14,7 @@ import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase
 import { FirebaseError } from 'firebase/app';
 import { AnyObject, Maybe } from 'yup/lib/types';
 
-declare module 'Yup' {
+declare module 'yup' {
   interface StringSchema<
     TType extends Maybe<string> = string | undefined,
     TContext extends AnyObject = AnyObject,
