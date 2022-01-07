@@ -12,6 +12,19 @@ import { auth, db } from '../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
+import { AnyObject, Maybe } from 'yup/lib/types';
+
+declare module 'Yup' {
+  interface StringSchema<
+    TType extends Maybe<string> = string | undefined,
+    TContext extends AnyObject = AnyObject,
+    TOut extends TType = TType,
+  > extends Yup.BaseSchema<TType, TContext, TOut> {
+    validCpf(errorMessage: string): StringSchema<TType, TContext>;
+    validCnpj(errorMessage: string): StringSchema<TType, TContext>;
+    existsEmail(errorMessage: string): StringSchema<TType, TContext>;
+  }
+}
 
 interface RegisterAuthProps {
   data: {
