@@ -7,6 +7,7 @@ interface ButtonProps {
 }
 
 export const Section = styled.section`
+  overflow: hidden;
   width: 100%;
   min-height: 32rem;
   background-position-x: 80%;
@@ -29,6 +30,40 @@ export const Section = styled.section`
     align-items: center;
     justify-content: space-evenly;
   }
+
+  .carousel {
+    display: none;
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 3rem 10% 6rem 10%;
+    
+    .boxes {
+      display: none;
+    }
+
+    .carousel {
+      display: initial;
+      margin-top: -2rem;
+    }
+  }
+
+  @media (max-width: 375px) {
+    padding: 6rem 10% 9rem 10%;
+    align-items: center;
+
+    .boxes {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel {
+      display: none;
+    }
+  }
 `;
 
 export const Title = styled.h3`
@@ -36,6 +71,10 @@ export const Title = styled.h3`
   font-size: 1.25rem;
   line-height: 1rem;
   color: ${colors.primaryWhite};
+
+  @media (max-width: 375px) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const Description = styled.p`
@@ -43,6 +82,11 @@ export const Description = styled.p`
   font-size: 0.5rem;
   line-height: 1rem;
   color: ${colors.primaryWhite};
+
+  @media (max-width: 375px) {
+    font-size: 1.2rem;
+    margin-top: 0.75rem;
+  }
 `;
 
 interface BoxRegisterProps {
@@ -51,7 +95,7 @@ interface BoxRegisterProps {
 
 export const BoxRegister = styled(motion.div)<BoxRegisterProps>`
   height: 25rem;
-  width: 22%;
+  width: 25%;
   cursor: pointer;
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), ${props => props.index == 1 ? "url('images/register/1.jpg')" : props.index == 2 ? "url('images/register/2.jpg')" : "url('images/register/0.jpg')"} ;
   background-size: cover;
@@ -61,4 +105,16 @@ export const BoxRegister = styled(motion.div)<BoxRegisterProps>`
   align-items: center;
   justify-content: flex-end;
   padding: 1.2rem 2rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (max-width: 375px) {
+    height: 30rem;
+
+    & + & {
+      margin-top: 1rem;
+    }
+  }
 `;

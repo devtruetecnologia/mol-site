@@ -47,18 +47,29 @@ interface ControllerButtonProps {
 }
 
 export const ControllerButton = styled.button<ControllerButtonProps>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: transparent;
+  border: solid 0.05rem ${colors.colorBorderBase};
+  border-radius: 0.188rem;
+  cursor: ${props => props.enabled ? 'pointer' : 'initial'};
+  width: 2.875rem;
+  height: 2.875rem;
+  z-index: 1;
+
+  @media (max-width: 375px) {
+    position: absolute;
+    right: 1rem;
     
-    background-color: transparent;
-    border: solid 0.05rem ${colors.colorBorderBase};
-    border-radius: 0.188rem;
-    cursor: ${props => props.enabled ? 'pointer' : 'initial'};
-    width: 2.875rem;
-    height: 2.875rem;
-    z-index: 1;
+
+    &:first-child {
+      left: 1rem;
+      right: 0;
+    }
+  }
 `
 
 interface PaginationButtonProps {

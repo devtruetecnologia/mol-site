@@ -21,6 +21,7 @@ export function ComercialAgent() {
           </Button>
         </div>        
         <img className="bg" src="images/sales-man.png" alt="" />
+        <img className="bg-mobile" src="images/sales-man-mobile.png" alt="" />
       </Section>
     </>
   )

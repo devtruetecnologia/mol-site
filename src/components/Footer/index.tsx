@@ -8,9 +8,11 @@ export function Footer() {
           <img src='logo-dark.svg' alt="Mol" />
           <div className="social">
             <TextFooterTop>Siga a gente:</TextFooterTop>
-            <img src="socials/insta.svg" />
-            <img src="socials/face.svg" />
-            <img src="socials/linkedin.svg" />
+            <div className="icons">
+              <img src="socials/insta.svg" />
+              <img src="socials/face.svg" />
+              <img src="socials/linkedin.svg" />
+            </div>
           </div>
         </div>
         <div className="separator"></div>

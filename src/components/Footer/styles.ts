@@ -45,6 +45,11 @@ export const FooterS = styled.footer`
             color: ${colors.primaryYellow};
           }
         }
+
+        .icons {
+          display: flex;
+          flex-direction: row;
+        }
       }
     }
 
@@ -68,6 +73,34 @@ export const FooterS = styled.footer`
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .top {
+        flex-direction: column;
+
+        img {
+          width: 17rem;
+          margin-bottom: 1rem;
+        }
+
+        .social {
+          width: 100%;
+          justify-content: space-between;
+
+          p {
+            font-size: 1.5rem;
+          }
+
+          img {
+            width: 3rem;
+          }
+        }
+      }
+      
+      .bottom {
+        justify-content: center;
       }
     }
 `;
@@ -97,11 +130,18 @@ export const Anchor = styled.a`
     }
 
     &:hover {
-
       &:after {
         width: 100%;
 
         transition: 400ms ease-in-out;
       }
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 375px) {
+      font-size: 1.5rem;
     }
 `;

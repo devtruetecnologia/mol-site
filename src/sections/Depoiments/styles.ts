@@ -17,6 +17,25 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
 
   position: relative;
+
+  @media (max-width: 768px) {
+    background: url('lines/lines-depoiments-tablet.svg'), linear-gradient(201.62deg, #122D58 0.66%, #0A1D3C 81.6%);
+    background-position-x: -0.1rem;
+    background-size: 101%;
+
+    padding: 2rem 3% 0 3%;
+  }
+
+  @media (max-width: 375px) {
+    height: 56rem;
+    
+    background: url('lines/lines-depoiments-mobile.svg'), linear-gradient(201.62deg, #122D58 0.66%, #0A1D3C 81.6%);
+    background-position-x: -0.1rem;
+    background-size: 101%;
+
+    padding: 2rem 0 0 0;
+  }
 `;

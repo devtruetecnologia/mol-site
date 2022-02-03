@@ -5,7 +5,7 @@ import { Section } from "./styles";
 export function Banner() {
   return (
     <>
-      <Section>
+      <Section className="banner">
         <div className="box">
         <TitleBanner>Soluções práticas para motoristas e embarcadores</TitleBanner>
         </div>

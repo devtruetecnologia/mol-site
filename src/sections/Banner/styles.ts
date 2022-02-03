@@ -21,4 +21,23 @@ export const Section = styled.section`
   .box {
     width: 30%;
   }
+
+  @media (max-width: 768px) {
+    .box {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 375px) {
+    min-height: 60rem;
+    background: linear-gradient(1.36deg, #122D58 20.08%, rgba(18, 45, 88, 0) 95.52%), url('images/truck-driver-bg.jpg'), ${colors.primaryBlue};
+    justify-content: flex-end;
+    align-items: center;
+    padding: 4rem 7%;
+
+    .box {
+      text-align: center;
+      width: 100%;
+    }
+  }
 `;
