@@ -4,6 +4,7 @@ import pxtovw from '../../utils/pxtovw';
 export const colors = {
   primaryBlue: '#122D58',
   primaryYellow: '#FFF28D',
+  primaryYellowTransp: '#FFF28DCC',
   primaryGrey: '#EFEFEF',
   primaryGreyDark: '#7B7B7B',
   primaryGreyLight: '#F1F2F5',
@@ -69,6 +70,24 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     font-size: ${pxtovw(16)};
     overflow-x: hidden;
+  }
+
+  scrollbar-width {
+    width: 8px;
+  }
+
+  scrollbar-track {
+    background-color: #EFEFEF;
+    border-radius: 0.7rem;
+  }
+  
+  scrollbar-thumb {
+    background: #7B7B7B; 
+    border-radius: 0.7rem;
+  }
+
+  scrollbar-thumb:hover {
+    background: #b30000; 
   }
 
   @media (max-width: 768px) {

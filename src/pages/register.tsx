@@ -1,10 +1,10 @@
 import { Checkbox } from '@chakra-ui/checkbox';
 import { motion } from 'framer-motion';
-import { BoxForm, Container } from '../assets/styles/register';
+import { BoxForm, BoxText, ButtonModal, Container } from '../assets/styles/register';
 import { Button } from '../components/Header/styles';
 import InputField from '../components/InputField';
 import * as Yup from "yup";
-import { CircularProgress, useToast } from '@chakra-ui/react';
+import { Box, chakra, CircularProgress, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/dist/client/router';
 import { useFormik } from 'formik';
 import InputMask from "react-input-mask";
@@ -13,6 +13,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 import { AnyObject, Maybe } from 'yup/lib/types';
+import { TitleTextWhite } from '../assets/styles/texts';
+import { Link } from 'react-scroll';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { useCheckbox } from '@chakra-ui/react'
+import { colors } from '../assets/styles/global';
+import { FiCheck } from 'react-icons/fi';
 
 declare module 'yup' {
   interface StringSchema<
@@ -47,6 +53,7 @@ interface RegisterProps {
 export default function Register() {
   const toast = useToast()
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const variants = {
     hidden: { opacity: 0, x: -200, y: 0 },
@@ -57,6 +64,14 @@ export default function Register() {
   const {
     query: { type },
   } = router
+
+  function backToHome(section) {
+    router.push({ pathname: '/', query: { section: section } })
+  }
+
+  function goToAccess() {
+    router.push('/access');
+  }
 
   const formik = useFormik({
     initialValues: getInitialValues(),
@@ -254,6 +269,50 @@ export default function Register() {
       });
   }
 
+  function getType() {
+    if (type === 'PROVIDER') {
+      return 'Embarcador'
+    } else if (type === 'AGENT') {
+      return 'Agente'
+    } else {
+      return 'Operador Comercial'
+    }
+  }
+
+  const CustomCheckbox = (props) => {
+    const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
+      useCheckbox(props)
+
+    return (
+      <chakra.label
+        display='flex'
+        flexDirection='row'
+        alignItems='center'
+        gridColumnGap={2}
+        rounded='lg'
+        cursor='pointer'
+        {...htmlProps}
+      >
+        <input {...getInputProps()} hidden />
+        <Flex
+          alignItems='center'
+          justifyContent='center'
+          border='2px solid'
+          borderColor={state.isChecked ? 'transparent' : colors.primaryWhite}
+          borderRadius='0.15rem'
+          transition='400ms'
+          backgroundColor={state.isChecked ? colors.primaryYellow : 'transparent'}
+          w='1.2rem'
+          h='1.1rem'
+          {...getCheckboxProps()}
+        >
+          {state.isChecked && <FiCheck size="0.95rem" />}
+        </Flex>
+        <Text {...getLabelProps()}>{props.children}</Text>
+      </chakra.label>
+    )
+  }
+
   return (
     <motion.main
       variants={variants}
@@ -262,50 +321,85 @@ export default function Register() {
       exit="exit"
       transition={{ type: 'linear' }}
     >
-      <Container>
+      <Container typeRegister={type}>
+        <BoxText>
+          <h2>Seja um<br/>{getType().toLowerCase()}</h2>
+          <h4>Receba pedidos de recolhimento e entrega de cargas em todo o Brasil</h4>
+          <p>Não sou um embarcador. <strong onClick={() => backToHome('registers')}>Mudar o perfil</strong></p>
+        </BoxText>
         <BoxForm>
-          <img src="logo-light.svg" alt="Logo MOL" />
-          <p>Você está prestes a conhecer um sistema de gestão logística mais inovador do Brasil.</p>
-            {
-              type !== 'PROVIDER' ? 
-              (
-                <form onSubmit={formik.handleSubmit}>
+          <h3>Criar seu cadastro como {getType().toLowerCase()}.</h3>
+          {
+            type !== 'PROVIDER' ? 
+            (
+              <form onSubmit={formik.handleSubmit}>
+                <div className="fields">
                   <InputField label="Nome" messageError={`${formik.errors.name}`} name="name" placeholder="Informe seu nome" isInvalid={Boolean(formik.errors.name)} onChange={formik.handleChange} value={formik.values.name} />
                   <InputField label="Sobrenome" messageError={`${formik.errors.last_name}`} name="last_name" placeholder="Informe seu sobrenome" isInvalid={Boolean(formik.errors.last_name)} onChange={formik.handleChange} value={formik.values.last_name} />
                   <InputField label="CPF" mask="***.***.***-**" messageError={`${formik.errors.cpf}`} name="cpf" placeholder="Informe seu CPF" isInvalid={Boolean(formik.errors.cpf)} onChange={formik.handleChange} value={formik.values.cpf} as={InputMask} />
                   <InputField label="Telefone" mask="(**) *****-****" messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} as={InputMask} />
                   <InputField label="E-mail" messageError={`${formik.errors.email}`} name="email" placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
-                  <div className="checkbox-group">
-                    <Checkbox className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
-                    <Checkbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
-                    <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
-                  </div>
-                  <Button type='submit' extended>
-                    {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
-                  </Button>
-                </form>
-              )
-              : 
-              (
-                <form onSubmit={formik.handleSubmit}>
+                </div>
+                <div className="checkbox-group">
+                  <Checkbox isDisabled className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
+                  <Checkbox isDisabled className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                  <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
+                </div>
+                <Button type='submit' extended>
+                  {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
+                </Button>
+              </form>
+            )
+            : 
+            (
+              <form onSubmit={formik.handleSubmit}>
+                <div className="fields">
                   <InputField label="Nome de Usuário" messageError={`${formik.errors.username}`} name="username" placeholder="Informe seu nome de usuário" isInvalid={Boolean(formik.errors.username)} onChange={formik.handleChange} value={formik.values.username} />
                   <InputField label="CNPJ" mask="**.***.***/****-**" as={InputMask} messageError={`${formik.errors.cnpj}`} name="cnpj" placeholder="Informe seu CNPJ" isInvalid={Boolean(formik.errors.cnpj)} onChange={formik.handleChange} value={formik.values.cnpj} />
                   <InputField label="Telefone" mask="(**) *****-****" as={InputMask} messageError={`${formik.errors.phone}`} name="phone" placeholder="Informe seu telefone" isInvalid={Boolean(formik.errors.phone)} onChange={formik.handleChange} value={formik.values.phone} />
                   <InputField label="E-mail" name="email" messageError={`${formik.errors.email}`} placeholder="Informe seu e-mail" isInvalid={Boolean(formik.errors.email)} onChange={formik.handleChange} value={formik.values.email} />
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
-                  <div className="checkbox-group">
-                    <Checkbox className="checkbox-terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
-                    <Checkbox className="checkbox-terms" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
-                    <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
-                  </div>
-                  <Button type='submit' extended>
-                    {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
-                  </Button>
-                </form>
-              )
-            }
+                </div>
+                <div className="checkbox-group">
+                  <CustomCheckbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.terms)} value={formik.values.privacy}><p>Li e aceito o <strong onClick={() => {onOpen()}}>termo de Uso</strong></p></CustomCheckbox>
+                  <Checkbox isDisabled className="checkbox-terms" isInvalid={Boolean(formik.errors.privacy)} value={formik.values.privacy}><p>Li e aceito a <strong onClick={() => {onOpen()}}>política de privacidade</strong></p></Checkbox>
+                  <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
+                </div>
+                <Button type='submit' extended>
+                  {formik.isSubmitting ? <CircularProgress isIndeterminate={true} size="1.2rem" /> : 'Cadastrar' }
+                </Button>
+                <p>Já sou cadastrado. <strong onClick={goToAccess}>Entrar</strong></p>
+              </form>
+            )
+          }
         </BoxForm>
+        <Modal
+          onClose={onClose}
+          isOpen={isOpen}
+          size="lg"
+          scrollBehavior="inside"
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader display="flex" fontWeight="700" flexDirection="row" justifyContent="center" alignItems="center">Termo de Uso</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody className="modal-body">
+              <Scrollbars
+                style={{ width: '100%', height: '27rem' }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in quam ac elit cursus pulvinar. Sed blandit, lorem sit amet maximus condimentum, lacus sem ultricies urna, quis porta ex ex ac ex. Aenean faucibus, tellus at consequat porttitor, massa magna posuere lectus, vel molestie neque metus nec enim. Donec sapien justo, laoreet in tortor sed, auctor tempor justo. Vivamus congue ex a molestie auctor. Cras aliquet cursus nulla eget semper. Donec ut tempor ante. Fusce venenatis augue ac orci tristique, id dictum tellus dignissim. In fermentum eu est at rhoncus. Mauris pellentesque nisl eget accumsan congue. Pellentesque scelerisque odio ante, quis dapibus lorem blandit eget. Proin condimentum, libero ac volutpat interdum, mauris dui egestas lectus, in eleifend neque dui et metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in quam ac elit cursus pulvinar. Sed blandit, lorem sit amet maximus condimentum, lacus sem ultricies urna, quis porta ex ex ac ex. Aenean faucibus, tellus at consequat porttitor, massa magna posuere lectus, vel molestie neque metus nec enim. Donec sapien justo, laoreet in tortor sed, auctor tempor justo. Vivamus congue ex a molestie auctor. Cras aliquet cursus nulla eget semper. Donec ut tempor ante. Fusce venenatis augue ac orci tristique, id dictum tellus dignissim. In fermentum eu est at rhoncus. Mauris pellentesque nisl eget accumsan congue. Pellentesque scelerisque odio ante, quis dapibus lorem blandit eget. Proin condimentum, libero ac volutpat interdum, mauris dui egestas lectus, in eleifend neque dui et metus. 
+              </Scrollbars>
+            </ModalBody>
+            <ModalFooter overflowX="hidden" display="flex" flexDirection="column" alignItems="flex-end">
+              <Box width="100%" display="flex" flexDirection="column" alignItems="flex-start" >
+                <Checkbox className="checkbox-terms" name="privacy" onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito o termo de Uso</p></Checkbox>
+              </Box>
+              <ButtonModal onClick={onClose}>Fechar</ButtonModal>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Container>
     </motion.main>
   )

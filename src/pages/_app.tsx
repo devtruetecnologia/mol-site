@@ -17,10 +17,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AnimatePresence exitBeforeEnter>
-        <GlobalStyle />
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
+        <GlobalStyle key="style" />
+        <Header key="header" />
+        <Component key="body" {...pageProps} />
+        <Footer key="footer" />
       </AnimatePresence>
     </ChakraProvider>
   )

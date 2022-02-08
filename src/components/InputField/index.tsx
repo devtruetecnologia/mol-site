@@ -24,9 +24,9 @@ export default function InputField(props: InputFieldProps & InputProps) {
       {label.toLowerCase() === 'senha' ? 
       <InputGroup size='md'>
         <Input type={show ? 'text' : 'password'} Input className="input" label={label} name={name} {...rest} variant='filled' width="100%" fontSize="0.75rem" focusBorderColor={colors.primaryYellow} bgColor={colors.primaryWhite} backgroundColor={colors.primaryWhite} padding="0 0.6rem" borderRadius="0.125rem" size='md'  />
-        <InputRightElement width='3.2rem'>
-          <Button h='1.75rem' size='sm' onClick={handleClick}>
-            {show ? <FiEye /> : <FiEyeOff />}
+        <InputRightElement className="input-right-element" width='3.2rem'>
+          <Button className="button-password" h='1.75rem' size='sm' onClick={handleClick}>
+            {show ? <FiEye className="icon-password" /> : <FiEyeOff className="icon-password" />}
           </Button>
         </InputRightElement>
       </InputGroup> 

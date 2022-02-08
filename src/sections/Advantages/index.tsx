@@ -50,7 +50,7 @@ export function Advantages() {
       <Section className='advantages'>
         <TitleSectionWhite className="title">Vantagens do MOL</TitleSectionWhite>
         <div className="boxs">
-          {boxs.map(box => <BoxAdvantage boxProps={box} />)}
+          {boxs.map(box => <BoxAdvantage key={box.image} boxProps={box} />)}
         </div>
         <div className="carousel">
           <AdvantagesCarousel slides={boxs} />

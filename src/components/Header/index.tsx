@@ -39,7 +39,7 @@ export function Header() {
         </nav>
 
         <div className="buttons">
-          <Link to="register" spy={true} smooth={true} duration={500}>
+          <Link to="registers" spy={true} smooth={true} duration={500}>
             <Button className="register" outlined>
               Cadastrar-se
             </Button>
