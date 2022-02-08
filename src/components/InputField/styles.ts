@@ -32,4 +32,34 @@ export const InputFieldS = styled.div`
       background-color: #FFF;
     }
   }
+
+  @media (max-width: 375px) {
+    label {
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .input {
+      font-size: 1.3rem;
+      height: 4.5rem;
+      border-radius: 0.5rem;
+      padding: 1rem 1rem;
+    }
+
+    .input-right-element {
+      width: 6rem;
+      height: 100%;
+
+      .button-password {
+        width: 5rem;
+        height: 80%;
+        margin: 0 !important;
+
+        svg {
+          width: 2.3rem;
+          height: 2.3rem;
+        }
+      }
+    }
+  }
 `;

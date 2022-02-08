@@ -27,7 +27,7 @@ export function Register() {
 
   return (
     <>
-      <Section className='register'>
+      <Section className='registers'>
         <TitleSection title="Cadastro" direction='none' />
         <div className="boxes">
           <BoxRegister onClick={() => {goToRegister('PROVIDER')}} index={0} whileHover={{ scale: 1.1 }} transition={{ type: 'spring', duration: 0.5 }}>
