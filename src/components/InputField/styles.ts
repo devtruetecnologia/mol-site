@@ -33,6 +33,36 @@ export const InputFieldS = styled.div`
     }
   }
 
+  @media (max-width: 768px) {
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .input {
+      font-size: 0.9rem;
+      height: 3rem;
+      border-radius: 0.3rem;
+      padding: 0.7rem 0.7rem;
+    }
+
+    .input-right-element {
+      width: 4rem;
+      height: 100%;
+
+      .button-password {
+        width: 3.5rem;
+        height: 80%;
+        margin: 0 !important;
+
+        svg {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+  }
+
   @media (max-width: 375px) {
     label {
       font-size: 1.3rem;

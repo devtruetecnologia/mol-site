@@ -13,12 +13,11 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { FirebaseError } from 'firebase/app';
 import { AnyObject, Maybe } from 'yup/lib/types';
-import { TitleTextWhite } from '../assets/styles/texts';
-import { Link } from 'react-scroll';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { useCheckbox } from '@chakra-ui/react'
 import { colors } from '../assets/styles/global';
 import { FiCheck } from 'react-icons/fi';
+import ModalTerms from '../components/ModalTerms';
+import { useState } from 'react';
 
 declare module 'yup' {
   interface StringSchema<
@@ -50,10 +49,13 @@ interface RegisterProps {
   type: 'AGENT' | 'COMMERCIAL' | 'PROVIDER',
 }
 
+type TypeModal = 'terms' | 'privacy';
+
 export default function Register() {
   const toast = useToast()
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [ typeModal, setTypeModal ] = useState<TypeModal>('terms')
 
   const variants = {
     hidden: { opacity: 0, x: -200, y: 0 },
@@ -71,6 +73,11 @@ export default function Register() {
 
   function goToAccess() {
     router.push('/access');
+  }
+
+  function handleOpenModal(type: TypeModal) {
+    setTypeModal(type);
+    onOpen();
   }
 
   const formik = useFormik({
@@ -362,8 +369,15 @@ export default function Register() {
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                 </div>
                 <div className="checkbox-group">
-                  <CustomCheckbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.terms)} value={formik.values.privacy}><p>Li e aceito o <strong onClick={() => {onOpen()}}>termo de Uso</strong></p></CustomCheckbox>
-                  <Checkbox isDisabled className="checkbox-terms" isInvalid={Boolean(formik.errors.privacy)} value={formik.values.privacy}><p>Li e aceito a <strong onClick={() => {onOpen()}}>política de privacidade</strong></p></Checkbox>
+                  {/* <CustomCheckbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.terms)} value={formik.values.privacy}><p>Li e aceito o <strong onClick={() => {onOpen()}}>termo de Uso</strong></p></CustomCheckbox> */}
+                  <div className="checkbox">
+                    <Checkbox className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} isChecked={formik.values.terms} />
+                    <p>Li e aceito os <strong onClick={() => {handleOpenModal('terms')}}>termos de uso</strong></p>
+                  </div>
+                  <div className="checkbox">
+                    <Checkbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange}  isChecked={formik.values.privacy} />
+                    <p>Li e aceito a <strong onClick={() => {handleOpenModal('privacy')}}>política de privacidade</strong></p>
+                  </div>
                   <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
                 </div>
                 <Button type='submit' extended>
@@ -374,32 +388,7 @@ export default function Register() {
             )
           }
         </BoxForm>
-        <Modal
-          onClose={onClose}
-          isOpen={isOpen}
-          size="lg"
-          scrollBehavior="inside"
-          isCentered
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader display="flex" fontWeight="700" flexDirection="row" justifyContent="center" alignItems="center">Termo de Uso</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className="modal-body">
-              <Scrollbars
-                style={{ width: '100%', height: '27rem' }}
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in quam ac elit cursus pulvinar. Sed blandit, lorem sit amet maximus condimentum, lacus sem ultricies urna, quis porta ex ex ac ex. Aenean faucibus, tellus at consequat porttitor, massa magna posuere lectus, vel molestie neque metus nec enim. Donec sapien justo, laoreet in tortor sed, auctor tempor justo. Vivamus congue ex a molestie auctor. Cras aliquet cursus nulla eget semper. Donec ut tempor ante. Fusce venenatis augue ac orci tristique, id dictum tellus dignissim. In fermentum eu est at rhoncus. Mauris pellentesque nisl eget accumsan congue. Pellentesque scelerisque odio ante, quis dapibus lorem blandit eget. Proin condimentum, libero ac volutpat interdum, mauris dui egestas lectus, in eleifend neque dui et metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in quam ac elit cursus pulvinar. Sed blandit, lorem sit amet maximus condimentum, lacus sem ultricies urna, quis porta ex ex ac ex. Aenean faucibus, tellus at consequat porttitor, massa magna posuere lectus, vel molestie neque metus nec enim. Donec sapien justo, laoreet in tortor sed, auctor tempor justo. Vivamus congue ex a molestie auctor. Cras aliquet cursus nulla eget semper. Donec ut tempor ante. Fusce venenatis augue ac orci tristique, id dictum tellus dignissim. In fermentum eu est at rhoncus. Mauris pellentesque nisl eget accumsan congue. Pellentesque scelerisque odio ante, quis dapibus lorem blandit eget. Proin condimentum, libero ac volutpat interdum, mauris dui egestas lectus, in eleifend neque dui et metus. 
-              </Scrollbars>
-            </ModalBody>
-            <ModalFooter overflowX="hidden" display="flex" flexDirection="column" alignItems="flex-end">
-              <Box width="100%" display="flex" flexDirection="column" alignItems="flex-start" >
-                <Checkbox className="checkbox-terms" name="privacy" onChange={formik.handleChange} value={formik.values.privacy}><p>Li e aceito o termo de Uso</p></Checkbox>
-              </Box>
-              <ButtonModal onClick={onClose}>Fechar</ButtonModal>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+        <ModalTerms type={typeModal} onClose={onClose} isOpen={isOpen} formik={formik} />
       </Container>
     </motion.main>
   )
