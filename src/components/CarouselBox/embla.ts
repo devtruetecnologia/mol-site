@@ -105,6 +105,68 @@ export const SliderDiv = styled.div`
     max-width: none;
     transform: translate(-50%, -50%);
   }
+
+  @media (max-width: 768px) {
+    padding: 0;
+    max-width: 55rem;
+    margin-left: -12%;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 375px) {
+    margin-left: 0;
+    
+    .embla__viewport {
+      overflow: hidden;
+      width: 100vw;
+    }
+
+    .embla__slide__inner {
+      width: 100vw;
+      height: 40rem;
+    }
+
+    .embla__slide__img {
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      width: 100vw;
+      height: 40rem;
+      object-fit: cover;
+      max-width: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .gradient {
+      background: linear-gradient(0deg, #152346 25.95%, rgba(21, 41, 80, 0) 98.56%);
+      width: 100vw;
+      height: 22rem;
+
+      padding: 9.25rem 4rem 0 4rem;
+
+      .number-box {
+        p {
+          color: ${colors.primaryBlue};
+          font-weight: 600;
+          font-size: 3rem;
+          position: absolute;
+          left: 1.6rem;
+          top: 0.65rem;
+        }
+
+        img {
+          width: 5rem;
+        }
+      }
+
+      .text-box {
+        width: 83%;
+        margin-left: 1.5rem;
+      }
+    }
+  }
 `
 
 export const SliderDots = styled.div`
@@ -116,4 +178,9 @@ export const SliderDots = styled.div`
   position: absolute;
   right: 8rem;
   bottom: 2.7rem;
+
+  @media (max-width: 768px) {
+    right: 5.5rem;
+    bottom: 1rem;
+  }
 `

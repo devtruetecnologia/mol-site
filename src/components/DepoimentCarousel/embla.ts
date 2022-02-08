@@ -80,6 +80,94 @@ export const SliderDiv = styled.div`
     justify-content: flex-start;
     align-items: flex-start;
   }
+
+  @media (max-width: 768px) {
+    padding: 0;
+    max-width: 56rem;
+    margin-left: 0;
+    margin-right: 0;
+
+    .embla__slide__inner {
+      width: 33rem;
+      height: 35rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .embla__slide__div {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .embla__slide {
+      .text-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 83%;
+        margin-left: 0;
+        margin-right: 0.7rem;
+      }
+
+      img {
+        width: 9rem;
+        height: 9rem;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  @media (max-width: 375px) {
+    padding: 0;
+    width: 100vw;
+
+    .embla__viewport {
+      width: 100%;
+    }
+
+    .embla__container {
+      margin: 0;
+    }
+    
+    .embla__slide__inner {
+      width: 100vw;
+      height: 50rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .embla__slide__div {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .embla__slide {
+      .text-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 83%;
+        margin-left: 0;
+        margin-right: 0.7rem;
+      }
+
+      img {
+        width: 13rem;
+        height: 13rem;
+        border-radius: 50%;
+      }
+    }
+  }
 `
 
 export const SliderDots = styled.div`
@@ -91,4 +179,12 @@ export const SliderDots = styled.div`
   position: absolute;
   right: 8rem;
   bottom: 2.7rem;
+
+  @media (max-width: 375px) {
+    width: 100vw;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+  }
 `

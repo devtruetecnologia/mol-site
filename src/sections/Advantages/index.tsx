@@ -1,4 +1,5 @@
 import { TitleBanner, TitleSectionWhite } from "../../assets/styles/texts";
+import { AdvantagesCarousel } from "../../components/AdvantagesCarousel";
 import { BoxAdvantage } from "../../components/BoxAdvantage";
 import { CountPagination } from "../../components/CountPagination";
 import { TitleSection } from "../../components/TitleSection";
@@ -47,8 +48,13 @@ export function Advantages() {
   return (
     <>
       <Section className='advantages'>
-        <TitleSectionWhite>Vantagens do MOL</TitleSectionWhite>
-        {boxs.map(box => <BoxAdvantage boxProps={box} />)}
+        <TitleSectionWhite className="title">Vantagens do MOL</TitleSectionWhite>
+        <div className="boxs">
+          {boxs.map(box => <BoxAdvantage boxProps={box} />)}
+        </div>
+        <div className="carousel">
+          <AdvantagesCarousel slides={boxs} />
+        </div>
       </Section>
     </>
   )

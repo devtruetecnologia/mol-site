@@ -49,4 +49,57 @@ export const Section = styled.section`
       }
     }
   }
+
+  @media (max-width: 768px) {
+    background-position-x: 93%;
+    background-position-y: 70%;
+    background-size: 67%;
+    padding: 3rem 8% 8rem 8%;
+
+    .box {
+      padding: 1rem 1.2rem 1rem 1.2rem;
+
+      .platforms {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1.3rem;
+
+        img {
+          width: 50%;
+        }
+
+        img + img {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 375px) {
+    min-height: 87rem;
+    padding: 5rem 5% 8rem 5%;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    background-position-x: 150%;
+    background-position-y: 82%;
+    background-size: 110%;
+    
+    .box {
+      width: 100%;
+      padding: 2rem 2rem 2rem 2rem;
+
+      .platforms {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+
+        img {
+          width: 40%;
+        }
+      }
+    }
+  }
 `;

@@ -33,7 +33,21 @@ export const GlobalStyle = createGlobalStyle`
   button,
   textarea {
     font: 500 1.125rem Montserrat;
+    font-family: Montserrat, sans-serif;
     color: ${colors.colorTextBase};
+
+    @media (max-width: 375px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: Montserrat, sans-serif;
   }
 
   input {
@@ -53,9 +67,21 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-      font-size: ${pxtovw(16)};
-      overflow-x: hidden;
+    font-size: ${pxtovw(16)};
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      font-size: ${pxtovw(24)};
     }
+  }
+
+  @media (max-width: 375px) {
+    :root {
+      font-size: ${pxtovw(36)};
+    }
+  }
 `;
 
 export default GlobalStyle;

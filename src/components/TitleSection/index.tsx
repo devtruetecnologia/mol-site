@@ -3,7 +3,7 @@ import { TitleSectionDiv } from './styles';
 
 interface TitleSectionProps {
   title: string,
-  direction?: 'right' | 'center' | 'left',
+  direction?: 'right' | 'center' | 'left' | 'none',
 }
 
 export function TitleSection({ title, direction }:TitleSectionProps) {
