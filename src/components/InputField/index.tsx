@@ -31,7 +31,7 @@ export default function InputField(props: InputFieldProps & InputProps) {
         </InputRightElement>
       </InputGroup> 
       : 
-      <Input className="input" marginBottom={messageError != 'undefined' ? '0' : '0.915rem'} mask={mask ?? mask} label={label} name={name} {...rest} variant='filled' width="100%" fontSize="0.75rem" focusBorderColor={colors.primaryYellow} bgColor={colors.primaryWhite} backgroundColor={colors.primaryWhite} padding="0 0.6rem" borderRadius="0.125rem" size='md' />}
+      <Input className="input" mask={mask ?? mask} label={label} name={name} {...rest} variant='filled' width="100%" fontSize="0.75rem" focusBorderColor={colors.primaryYellow} bgColor={colors.primaryWhite} backgroundColor={colors.primaryWhite} padding="0 0.6rem" borderRadius="0.125rem" size='md' />}
       <p>{messageError != 'undefined' ? messageError : ''}</p>
     </InputFieldS>
   );

@@ -115,6 +115,10 @@ export const SliderDiv = styled.div`
 
   @media (max-width: 375px) {
     margin-left: 0;
+
+    .embla__container {
+      margin-left: -6px;
+    }
     
     .embla__viewport {
       overflow: hidden;

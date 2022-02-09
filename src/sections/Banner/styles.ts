@@ -31,6 +31,9 @@ export const Section = styled.section`
   @media (max-width: 375px) {
     min-height: 60rem;
     background: linear-gradient(1.36deg, #122D58 20.08%, rgba(18, 45, 88, 0) 95.52%), url('images/truck-driver-bg.jpg'), ${colors.primaryBlue};
+    background-position: 10%;
+    background-size: 350vw;
+    background-repeat: no-repeat;
     justify-content: flex-end;
     align-items: center;
     padding: 4rem 7%;

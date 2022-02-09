@@ -2,14 +2,16 @@ import styled from "styled-components";
 import { colors } from "../../assets/styles/global";
 
 interface RegisterProps {
-  typeRegister: string | string[],
+  typeRegister: string | string[];
 }
 
 export const Container = styled.main<RegisterProps>`
   width: 100%;
   min-height: 54rem;
-  background: ${props => `linear-gradient(90deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
-  background-size: ${props => props.typeRegister === 'PROVIDER' ? 'contain' : '70%'};
+  background: ${(props) =>
+    `linear-gradient(90deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
+  background-size: ${(props) =>
+    props.typeRegister === "PROVIDER" ? "contain" : "70vw"};
   background-position-y: 10%;
   background-repeat: no-repeat;
   margin: 0;
@@ -31,7 +33,10 @@ export const Container = styled.main<RegisterProps>`
     justify-content: center;
     align-items: flex-start;
     padding: 25rem 4% 8rem 4%;
-    background: ${props => `linear-gradient(180deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
+    background: ${(props) =>
+      `linear-gradient(180deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
+    background-size: ${(props) => props.typeRegister === "PROVIDER" ? "140vw" : "100vw"};
+    background-repeat: no-repeat;
   }
 
   @media (max-width: 375px) {
@@ -39,8 +44,12 @@ export const Container = styled.main<RegisterProps>`
     justify-content: center;
     align-items: flex-start;
     padding: 25rem 4% 8rem 4%;
-    background: ${props => `linear-gradient(180deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
-    background-size: ${props => props.typeRegister === 'PROVIDER' ? '170%' : '70%'};
+    background: ${(props) =>
+      `linear-gradient(180deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 45.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
+    background-size: ${(props) =>
+      props.typeRegister === "PROVIDER" ? "170vw" : "100vw"};
+    background-repeat: no-repeat;
+    background-position-y: 10vw;
   }
 `;
 
@@ -172,16 +181,35 @@ export const BoxForm = styled.div`
   .checkbox-group {
     margin: 0.5rem 0 1.5rem 0;
 
+    p {
+      width: fit-content;
+      margin: 0.5rem 0;
+      margin-left: 0.5rem;
+    }
+
+    .checkbox {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      margin-bottom: 0.5rem;
+
+      &:first-child {
+        margin-bottom: 0;
+      }
+    }
+
     .error {
       margin: 0;
-      font-size: .75rem;
+      font-size: 0.7rem;
+      height: 1rem;
     }
   }
 
   .checkbox-terms {
     p {
       margin: 0.6rem 0;
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
       color: ${colors.primaryWhite};
       font-weight: 400;
       font-size: 0.75rem;
@@ -205,6 +233,11 @@ export const BoxForm = styled.div`
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
+
+      p {
+        font-size: 0.9rem;
+        margin: 0.6rem 0;
+      }
 
       .fields {
         width: 100%;
@@ -234,18 +267,36 @@ export const BoxForm = styled.div`
     p {
       font-size: 1.2rem;
     }
-    
+
     h3 {
       font-size: 1.3rem;
     }
 
     form {
+      p {
+        font-size: 1.1rem;
+        margin: 0.6rem 0;
+      }
+
       .fields {
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+      }
+
+      .checkbox-group {
+        .checkbox {
+          &:first-child {
+            margin-bottom: 0.8rem;
+          }
+        }
+
+        .error {
+          margin-top: 0.5rem;
+          font-size: 1.1rem;
+        }
       }
 
       .checkbox-terms {
@@ -268,15 +319,17 @@ interface ButtonProps {
 }
 
 export const ButtonModal = styled.button<ButtonProps>`
-  color: ${props => props.outlined ? colors.primaryWhite : colors.primaryWhite};
-  background-color: ${props => props.outlined ? 'rgba(0, 0, 0, 0)' : colors.primaryBlue};
+  color: ${(props) =>
+    props.outlined ? colors.primaryWhite : colors.primaryWhite};
+  background-color: ${(props) =>
+    props.outlined ? "rgba(0, 0, 0, 0)" : colors.primaryBlue};
   font-size: 0.75rem;
   font-weight: 800;
   font-family: Montserrat;
-  width: ${props => props.extended ? '100%' : 'initial'};
+  width: ${(props) => (props.extended ? "100%" : "initial")};
   border: solid 0.09rem ${colors.primaryYellow};
-  padding: .45rem .8rem;
-  border-radius: .2rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.2rem;
   transition: 400ms;
 
   cursor: pointer;

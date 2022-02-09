@@ -119,19 +119,31 @@ export const Anchor = styled(Link)`
     animation-fill-mode: backwards;
   }
 
-  /* &:hover {
+  &:hover {
     &:after {
       animation: appearBar ease-in-out;
       animation-duration: 400ms;
       animation-fill-mode: forwards;
     }
-  } */
+  }
 
   &.active-anchor {
     &:after {
       animation: appearBar ease-in-out;
       animation-duration: 400ms;
       animation-fill-mode: forwards;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &:after {
+      animation: none;
+    }
+
+    &:hover {
+      &:after {
+        animation: none;
+      }
     }
   }
 
