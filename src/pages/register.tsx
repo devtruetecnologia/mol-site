@@ -288,40 +288,6 @@ export default function Register() {
     }
   }
 
-  const CustomCheckbox = (props) => {
-    const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } =
-      useCheckbox(props)
-
-    return (
-      <chakra.label
-        display='flex'
-        flexDirection='row'
-        alignItems='center'
-        gridColumnGap={2}
-        rounded='lg'
-        cursor='pointer'
-        {...htmlProps}
-      >
-        <input {...getInputProps()} hidden />
-        <Flex
-          alignItems='center'
-          justifyContent='center'
-          border='2px solid'
-          borderColor={state.isChecked ? 'transparent' : colors.primaryWhite}
-          borderRadius='0.15rem'
-          transition='400ms'
-          backgroundColor={state.isChecked ? colors.primaryYellow : 'transparent'}
-          w='1.2rem'
-          h='1.1rem'
-          {...getCheckboxProps()}
-        >
-          {state.isChecked && <FiCheck size="0.95rem" />}
-        </Flex>
-        <Text {...getLabelProps()}>{props.children}</Text>
-      </chakra.label>
-    )
-  }
-
   return (
     <motion.main
       variants={variants}
@@ -351,8 +317,14 @@ export default function Register() {
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                 </div>
                 <div className="checkbox-group">
-                  <Checkbox isDisabled className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} value={formik.values.terms}><p>Li e aceito o <strong>termo de Uso</strong></p></Checkbox>
-                  <Checkbox isDisabled className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} value={formik.values.privacy}><p>Li e aceito a <strong>política de privacidade</strong></p></Checkbox>
+                  <div className="checkbox">
+                    <Checkbox className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} isChecked={formik.values.terms} />
+                    <p>Li e aceito os <strong onClick={() => {handleOpenModal('terms')}}>termos de uso</strong></p>
+                  </div>
+                  <div className="checkbox">
+                    <Checkbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.privacy)} onChange={formik.handleChange}  isChecked={formik.values.privacy} />
+                    <p>Li e aceito a <strong onClick={() => {handleOpenModal('privacy')}}>política de privacidade</strong></p>
+                  </div>
                   <p className="error">{formik.errors.terms || formik.errors.privacy}</p>
                 </div>
                 <Button type='submit' extended>
@@ -371,7 +343,6 @@ export default function Register() {
                   <InputField label="Senha" messageError={`${formik.errors.password}`} name="password" placeholder="Informe sua senha" isInvalid={Boolean(formik.errors.password)} onChange={formik.handleChange} value={formik.values.password} />
                 </div>
                 <div className="checkbox-group">
-                  {/* <CustomCheckbox className="checkbox-terms" name="privacy" isInvalid={Boolean(formik.errors.terms)} value={formik.values.privacy}><p>Li e aceito o <strong onClick={() => {onOpen()}}>termo de Uso</strong></p></CustomCheckbox> */}
                   <div className="checkbox">
                     <Checkbox className="checkbox-terms" name="terms" isInvalid={Boolean(formik.errors.terms)} onChange={formik.handleChange} isChecked={formik.values.terms} />
                     <p>Li e aceito os <strong onClick={() => {handleOpenModal('terms')}}>termos de uso</strong></p>
