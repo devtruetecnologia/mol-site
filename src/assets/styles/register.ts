@@ -195,13 +195,14 @@ export const BoxForm = styled.div`
       margin-bottom: 0.5rem;
 
       &:first-child {
-        margin-bottom: 0.8rem;
+        margin-bottom: 0;
       }
     }
 
     .error {
       margin: 0;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      height: 1rem;
     }
   }
 
@@ -286,6 +287,12 @@ export const BoxForm = styled.div`
       }
 
       .checkbox-group {
+        .checkbox {
+          &:first-child {
+            margin-bottom: 0.8rem;
+          }
+        }
+
         .error {
           margin-top: 0.5rem;
           font-size: 1.1rem;

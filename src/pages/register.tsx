@@ -81,6 +81,8 @@ export default function Register() {
   }
 
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     initialValues: getInitialValues(),
     validationSchema: getValidationSchema(),
     onSubmit: handleFormSubmit,

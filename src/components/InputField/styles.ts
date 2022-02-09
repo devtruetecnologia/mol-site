@@ -9,7 +9,7 @@ export const InputFieldS = styled.div`
   justify-content: center;
   align-items: flex-start;
 
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
 
   label {
     font-weight: 700;
@@ -21,6 +21,7 @@ export const InputFieldS = styled.div`
   }
 
   p {
+    height: 1rem;
     margin: 0;
     margin-top: 0.2rem;
     text-align: start;

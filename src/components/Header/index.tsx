@@ -10,7 +10,6 @@ export function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function goToHome() {
-    handleOpen();
     router.push('/');
   }
 
@@ -69,7 +68,7 @@ export function Header() {
           </DrawerHeader>
           <DrawerBody className='drawer-body' width="34rem"  display="flex" flexDirection="column" alignItems="center" justifyContent="flex-start">
             <Box padding="1rem 0 3rem 0" display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-              <Anchor to="banner" onClick={goToHome} activeClass="active-anchor" spy={true} smooth={true} duration={500}>Início</Anchor>
+              <Anchor to="banner" onClick={() => {handleOpen(); goToHome();}} activeClass="active-anchor" spy={true} smooth={true} duration={500}>Início</Anchor>
               <Anchor to="meet-mol" onClick={handleOpen} spy={true} activeClass="active-anchor" smooth={true} duration={500}>O MOL</Anchor>
               <Anchor to="app" onClick={handleOpen} spy={true} activeClass="active-anchor" smooth={true} duration={500}>Aplicativo</Anchor>
               <Anchor to="how-works" onClick={handleOpen} spy={true} activeClass="active-anchor" smooth={true} duration={500}>Como funciona</Anchor>
