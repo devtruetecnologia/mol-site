@@ -38,7 +38,7 @@ export const Section = styled.section`
 
   @media (max-width: 768px) {
     padding: 3rem 10% 6rem 10%;
-    
+
     .boxes {
       display: none;
     }
@@ -49,7 +49,7 @@ export const Section = styled.section`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     padding: 6rem 10% 9rem 10%;
     align-items: center;
 
@@ -72,7 +72,7 @@ export const Title = styled.h3`
   line-height: 1rem;
   color: ${colors.primaryWhite};
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     font-size: 1.75rem;
   }
 `;
@@ -83,21 +83,27 @@ export const Description = styled.p`
   line-height: 1rem;
   color: ${colors.primaryWhite};
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     font-size: 1.2rem;
     margin-top: 0.75rem;
   }
 `;
 
 interface BoxRegisterProps {
-  index: number,
+  index: number;
 }
 
 export const BoxRegister = styled(motion.div)<BoxRegisterProps>`
   height: 25rem;
   width: 25%;
   cursor: pointer;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), ${props => props.index == 1 ? "url('images/register/1.jpg')" : props.index == 2 ? "url('images/register/2.jpg')" : "url('images/register/0.jpg')"} ;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    ${(props) =>
+      props.index == 1
+        ? "url('images/register/1.jpg')"
+        : props.index == 2
+        ? "url('images/register/2.jpg')"
+        : "url('images/register/0.jpg')"};
   background-size: cover;
   border-radius: 0.5rem;
   display: flex;
@@ -110,7 +116,7 @@ export const BoxRegister = styled(motion.div)<BoxRegisterProps>`
     width: 100%;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     height: 30rem;
 
     & + & {

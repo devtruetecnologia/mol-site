@@ -1,21 +1,21 @@
 import { createGlobalStyle } from "styled-components";
-import pxtovw from '../../utils/pxtovw';
+import pxtovw from "../../utils/pxtovw";
 
 export const colors = {
-  primaryBlue: '#122D58',
-  primaryYellow: '#FFF28D',
-  primaryYellowTransp: '#FFF28DCC',
-  primaryGrey: '#EFEFEF',
-  primaryGreyDark: '#7B7B7B',
-  primaryGreyLight: '#F1F2F5',
-  primaryWhite: '#FFFFFF',
-  
-  primaryBlueTransp: '#122D5899',
+  primaryBlue: "#122D58",
+  primaryYellow: "#FFF28D",
+  primaryYellowTransp: "#FFF28DCC",
+  primaryGrey: "#EFEFEF",
+  primaryGreyDark: "#7B7B7B",
+  primaryGreyLight: "#F1F2F5",
+  primaryWhite: "#FFFFFF",
 
-  colorBorderBase: '#C4C4C4',
-  colorTextBase: '#777777',
-  colorTextBaseLight: '#F0EFEF',
-}
+  primaryBlueTransp: "#122D5899",
+
+  colorBorderBase: "#C4C4C4",
+  colorTextBase: "#777777",
+  colorTextBaseLight: "#F0EFEF",
+};
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Montserrat, sans-serif;
     color: ${colors.colorTextBase};
 
-    @media (max-width: 375px) {
+    @media (max-width: 425px) {
       font-size: 1.5rem;
     }
   }
@@ -96,7 +96,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     :root {
       font-size: ${pxtovw(36)};
     }

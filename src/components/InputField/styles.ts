@@ -30,7 +30,7 @@ export const InputFieldS = styled.div`
 
   .input {
     &:focus {
-      background-color: #FFF;
+      background-color: #fff;
     }
   }
 
@@ -64,7 +64,7 @@ export const InputFieldS = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     label {
       font-size: 1.3rem;
       margin-bottom: 0.7rem;

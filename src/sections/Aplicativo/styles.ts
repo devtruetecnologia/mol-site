@@ -8,7 +8,7 @@ interface ButtonProps {
 export const Section = styled.section`
   width: 100%;
   min-height: 32rem;
-  background-image: url('images/mol-mockup-3d.png');
+  background-image: url("images/mol-mockup-3d.png");
   background-position-x: 80%;
   background-position-y: 70%;
   background-size: 40%;
@@ -75,7 +75,7 @@ export const Section = styled.section`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     min-height: 87rem;
     padding: 5rem 5% 8rem 5%;
 
@@ -85,7 +85,7 @@ export const Section = styled.section`
     background-position-x: 150%;
     background-position-y: 82%;
     background-size: 110%;
-    
+
     .box {
       width: 100%;
       padding: 2rem 2rem 2rem 2rem;

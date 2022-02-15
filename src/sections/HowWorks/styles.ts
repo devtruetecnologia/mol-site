@@ -7,7 +7,7 @@ interface ButtonProps {
 export const Section = styled.section`
   width: 100%;
   min-height: 46.375rem;
-  background: url('lines/line-how.svg');
+  background: url("lines/line-how.svg");
   background-size: contain;
   background-repeat: no-repeat;
   margin: 0;
@@ -25,7 +25,7 @@ export const Section = styled.section`
     padding: 4rem 15% 6rem 15%;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     align-items: center;
     padding: 4rem 0 6rem 0;
   }

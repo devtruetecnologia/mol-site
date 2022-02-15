@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors } from "../../assets/styles/global";
 
 interface TitleSectionDivProps {
-  direction?: 'right' | 'center' | 'left' | 'none';
+  direction?: "right" | "center" | "left" | "none";
 }
 
 export const TitleSectionDiv = styled.div<TitleSectionDivProps>`
@@ -18,9 +18,24 @@ export const TitleSectionDiv = styled.div<TitleSectionDivProps>`
   position: relative;
 
   img {
-    display: ${props => props.direction != null && props.direction != 'none' ? 'initial' : 'none'};
-    left: ${props => props.direction != null ? (props.direction == 'left' ? '-1.8rem' : (props.direction == 'center' ? '4.3rem' : 'none')) : 'none'};
-    right: ${props => props.direction != null ? (props.direction == 'right' ? '-1.8rem' : 'none') : 'none'};
+    display: ${(props) =>
+      props.direction != null && props.direction != "none"
+        ? "initial"
+        : "none"};
+    left: ${(props) =>
+      props.direction != null
+        ? props.direction == "left"
+          ? "-1.8rem"
+          : props.direction == "center"
+          ? "4.3rem"
+          : "none"
+        : "none"};
+    right: ${(props) =>
+      props.direction != null
+        ? props.direction == "right"
+          ? "-1.8rem"
+          : "none"
+        : "none"};
     width: 4.4rem;
     position: absolute;
     z-index: -1;
@@ -30,7 +45,7 @@ export const TitleSectionDiv = styled.div<TitleSectionDivProps>`
     margin-left: 3.7rem;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     margin-bottom: 2rem;
     margin-left: 0;
     text-align: center;

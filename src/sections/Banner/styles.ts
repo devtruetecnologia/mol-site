@@ -8,7 +8,12 @@ interface ButtonProps {
 export const Section = styled.section`
   width: 100%;
   min-height: 32rem;
-  background: linear-gradient(269.73deg, ${colors.primaryBlue} 39%, rgba(18, 45, 88, 0) 99.78%), url('images/truck-driver-bg.jpg'), ${colors.primaryBlue};
+  background: linear-gradient(
+      269.73deg,
+      ${colors.primaryBlue} 39%,
+      rgba(18, 45, 88, 0) 99.78%
+    ),
+    url("images/truck-driver-bg.jpg"), ${colors.primaryBlue};
   background-size: cover;
   margin: 0;
   padding: 0.6rem 10%;
@@ -28,9 +33,14 @@ export const Section = styled.section`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     min-height: 60rem;
-    background: linear-gradient(1.36deg, #122D58 20.08%, rgba(18, 45, 88, 0) 95.52%), url('images/truck-driver-bg.jpg'), ${colors.primaryBlue};
+    background: linear-gradient(
+        1.36deg,
+        #122d58 20.08%,
+        rgba(18, 45, 88, 0) 95.52%
+      ),
+      url("images/truck-driver-bg.jpg"), ${colors.primaryBlue};
     background-position: 10%;
     background-size: 350vw;
     background-repeat: no-repeat;

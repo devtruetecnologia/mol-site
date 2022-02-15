@@ -36,7 +36,7 @@ export const Section = styled.section`
     align-items: center;
     justify-content: center;
     background-size: cover;
-  } 
+  }
 
   .box {
     width: 48.5%;
@@ -64,7 +64,7 @@ export const Section = styled.section`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     justify-content: space-evenly;
     align-items: center;
     padding: 5rem 5% 6.5rem 5%;
@@ -77,19 +77,19 @@ export const Section = styled.section`
 `;
 
 interface ThumbVideoProps {
-  playing: boolean,
+  playing: boolean;
 }
 
 export const ThumbVideo = styled.div<ThumbVideoProps>`
   position: absolute;
-  display: ${props => props.playing ? 'none' : 'block'};
+  display: ${(props) => (props.playing ? "none" : "block")};
   left: 0;
   bottom: 0;
   z-index: 1;
   width: 100%;
   height: 100%;
   cursor: pointer;
-  background: url('images/video.jpg');
+  background: url("images/video.jpg");
   background-position: center;
   background-size: cover;
 
