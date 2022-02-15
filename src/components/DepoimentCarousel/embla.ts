@@ -57,7 +57,7 @@ export const SliderDiv = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    
+
     .text-box {
       display: flex;
       flex-direction: column;
@@ -122,7 +122,7 @@ export const SliderDiv = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     padding: 0;
     width: 100vw;
 
@@ -133,7 +133,7 @@ export const SliderDiv = styled.div`
     .embla__container {
       margin: 0;
     }
-    
+
     .embla__slide__inner {
       width: 100vw;
       height: 50rem;
@@ -168,7 +168,7 @@ export const SliderDiv = styled.div`
       }
     }
   }
-`
+`;
 
 export const SliderDots = styled.div`
   display: flex;
@@ -180,11 +180,11 @@ export const SliderDots = styled.div`
   right: 8rem;
   bottom: 2.7rem;
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     width: 100vw;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     right: 0;
   }
-`
+`;

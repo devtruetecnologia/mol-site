@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { colors } from "../../assets/styles/global";
 
 interface CarouselBoxProps {
-  image: string,
+  image: string;
 }
 
 export const CarouselBoxS = styled.div<CarouselBoxProps>`
   width: 51.25rem;
   height: 27.063rem;
-  background: url(${props => props.image}), ${colors.primaryBlueTransp};
+  background: url(${(props) => props.image}), ${colors.primaryBlueTransp};
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
@@ -41,10 +41,10 @@ export const Bg = styled.div`
   height: 100%;
   z-index: 0;
   mix-blend-mode: overlay;
-`
+`;
 
 interface PaginationButtonProps {
-  selected: boolean,
+  selected: boolean;
 }
 
 export const PaginationButton = styled.button<PaginationButtonProps>`
@@ -52,14 +52,18 @@ export const PaginationButton = styled.button<PaginationButtonProps>`
   height: 0.875rem;
   border-radius: 0.188rem;
   cursor: pointer;
-  border: ${props => props.selected ? `solid 0.05rem ${colors.primaryYellow}` : `solid 0.05rem ${colors.primaryGrey}`};
-  background-color: ${props => props.selected ? colors.primaryYellow : `transparent`};
+  border: ${(props) =>
+    props.selected
+      ? `solid 0.05rem ${colors.primaryYellow}`
+      : `solid 0.05rem ${colors.primaryGrey}`};
+  background-color: ${(props) =>
+    props.selected ? colors.primaryYellow : `transparent`};
 
   & + & {
     margin-left: 0.3rem;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     width: 1.3rem;
     height: 1.3rem;
 
@@ -67,4 +71,4 @@ export const PaginationButton = styled.button<PaginationButtonProps>`
       margin-left: 0.7rem;
     }
   }
-`
+`;

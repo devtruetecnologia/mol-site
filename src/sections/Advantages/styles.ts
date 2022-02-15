@@ -8,7 +8,8 @@ interface ButtonProps {
 export const Section = styled.section`
   width: 100%;
   min-height: 150rem;
-  background: url('lines/lines-advantages.svg'), linear-gradient(201.62deg, #122D58 0.66%, #0A1D3C 81.6%);
+  background: url("lines/lines-advantages.svg"),
+    linear-gradient(201.62deg, #122d58 0.66%, #0a1d3c 81.6%);
   background-size: cover;
   margin: 0;
   padding: 4.688rem 10% 7.5rem 10%;
@@ -36,7 +37,7 @@ export const Section = styled.section`
     padding: 4.688rem 8% 7.5rem 8%;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     justify-content: center;
     align-items: center;
     padding: 4.688rem 0 10rem 0;

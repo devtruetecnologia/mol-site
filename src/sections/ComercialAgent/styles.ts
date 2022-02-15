@@ -8,7 +8,12 @@ interface ButtonProps {
 export const Section = styled.section`
   width: 100%;
   height: 44.3rem;
-  background: linear-gradient(90.94deg, #EFEFEF 27.1%, rgba(239, 239, 239, 0) 53.2%), url('images/comercial-agent-bg.jpg');
+  background: linear-gradient(
+      90.94deg,
+      #efefef 27.1%,
+      rgba(239, 239, 239, 0) 53.2%
+    ),
+    url("images/comercial-agent-bg.jpg");
   background-size: cover;
   margin: 0;
   padding: 4.688rem 10% 7.5rem 7.5%;
@@ -52,7 +57,7 @@ export const Section = styled.section`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     height: 72rem;
     padding: 4.688rem 5% 7.5rem 5%;
 
@@ -70,7 +75,7 @@ export const Section = styled.section`
       align-items: center;
       justify-content: center;
     }
-    
+
     img.bg {
       display: none;
     }

@@ -35,11 +35,12 @@ export const Container = styled.main<RegisterProps>`
     padding: 25rem 4% 8rem 4%;
     background: ${(props) =>
       `linear-gradient(180deg, rgba(16, 40, 80, 0) 10%, rgba(16, 40, 80, 0) 20%, rgba(16, 40, 80, 1) 75.24%, rgba(16, 40, 80, 1) 80.24%), url('images/register-page/${props.typeRegister}.jpg'), rgba(16, 40, 80, 1) 80.24%`};
-    background-size: ${(props) => props.typeRegister === "PROVIDER" ? "140vw" : "100vw"};
+    background-size: ${(props) =>
+      props.typeRegister === "PROVIDER" ? "140vw" : "100vw"};
     background-repeat: no-repeat;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -112,7 +113,7 @@ export const BoxText = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     h4 {
       margin-bottom: 0;
     }
@@ -260,7 +261,7 @@ export const BoxForm = styled.div`
     }
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     background-color: transparent;
     padding: 3rem 0;
 
@@ -350,7 +351,7 @@ export const ButtonModal = styled.button<ButtonProps>`
     font-size: 1.1rem;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     font-size: 1.4rem;
 
     &.register {

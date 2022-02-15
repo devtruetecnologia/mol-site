@@ -42,7 +42,11 @@ export const SliderDiv = styled.div`
   }
 
   .gradient {
-    background: linear-gradient(0deg, #152346 25.95%, rgba(21, 41, 80, 0) 98.56%);
+    background: linear-gradient(
+      0deg,
+      #152346 25.95%,
+      rgba(21, 41, 80, 0) 98.56%
+    );
     width: 51.25rem;
     height: 15.25rem;
     position: absolute;
@@ -56,7 +60,7 @@ export const SliderDiv = styled.div`
 
     .number-box {
       position: relative;
-      
+
       p {
         color: ${colors.primaryBlue};
         font-weight: 600;
@@ -113,13 +117,13 @@ export const SliderDiv = styled.div`
     margin-top: 2rem;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 425px) {
     margin-left: 0;
 
     .embla__container {
       margin-left: -6px;
     }
-    
+
     .embla__viewport {
       overflow: hidden;
       width: 100vw;
@@ -144,7 +148,11 @@ export const SliderDiv = styled.div`
     }
 
     .gradient {
-      background: linear-gradient(0deg, #152346 25.95%, rgba(21, 41, 80, 0) 98.56%);
+      background: linear-gradient(
+        0deg,
+        #152346 25.95%,
+        rgba(21, 41, 80, 0) 98.56%
+      );
       width: 100vw;
       height: 22rem;
 
@@ -171,7 +179,7 @@ export const SliderDiv = styled.div`
       }
     }
   }
-`
+`;
 
 export const SliderDots = styled.div`
   display: flex;
@@ -187,4 +195,4 @@ export const SliderDots = styled.div`
     right: 5.5rem;
     bottom: 1rem;
   }
-`
+`;
