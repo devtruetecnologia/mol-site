@@ -28,7 +28,9 @@ export function Footer() {
       <div className="separator"></div>
       <div className="bottom">
         <div>
-          <span>39.783.649/0001-61 - </span>
+          <Anchor>
+            39.783.649/0001-61
+          </Anchor>
           <Anchor onClick={goToTerms}>
             Termos
           </Anchor>
