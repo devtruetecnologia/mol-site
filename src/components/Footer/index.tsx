@@ -29,7 +29,7 @@ export function Footer() {
       <div className="bottom">
         <div>
           <Anchor>
-            39.783.649/0001-61
+            MOL TRANSPORTES LTDA - 39.783.649/0001-61
           </Anchor>
           <Anchor onClick={goToTerms}>
             Termos
